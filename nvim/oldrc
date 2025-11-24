@@ -1,0 +1,141 @@
+filetype on                  " required
+
+" Ale
+let g:ale_linters = {'python': ['black'], 'javascript': ['eslint', 'tslint'], 'typescript': ['prettier', 'tslint'], 'vue': ['eslint'], 'css': ['stylelint'], 'html': ['eslint'], "json": ["prettier"]}
+let g:ale_fixers = {'python': ['black'], 'javascript': ['eslint', 'prettier'], 'css': ['prettier'], 'html': ['prettier'], 'json': ['prettier']}
+let g:ale_fix_on_save=1
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" git stuff
+Plugin 'tpope/vim-fugitive'
+
+" vim editor stuff
+Plugin 'simeji/winresizer'
+Plugin 'frazrepo/vim-rainbow'
+Plugin 'itchyny/lightline.vim'
+Plugin 'preservim/nerdtree'
+Plugin 'preservim/nerdcommenter'
+Plugin 'tpope/vim-surround'
+
+" Themes
+Plugin 'shaunsingh/nord.nvim'
+Plugin 'altercation/vim-colors-solarized'
+
+" Linters and fixers
+Plugin 'dense-analysis/ale'
+
+"autocomplete
+Plugin 'neoclide/coc.nvim'
+
+" html and css
+Plugin 'mattn/emmet-vim'
+Plugin 'ap/vim-css-color'
+
+" Syntax highlighting
+Plugin 'pangloss/vim-javascript'
+Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'vim-python/python-syntax'
+
+"snippets
+Plugin 'honza/vim-snippets'
+
+" The snippets require ultisnips
+"Plugin 'epilande/vim-es2015-snippets'
+"Plugin 'epilande/vim-react-snippets'
+"Plugin 'SirVer/ultisnips'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+
+"settings for solarized cholor scheme
+syntax enable
+" let g:solarized_termcolors=256
+" set termguicolors
+set background=light
+colorscheme solarized
+
+"mapping keys:
+let mapleader=";"
+let g:user_emmet_leader_key = ','
+
+"NERDTree
+nnoremap <silent> <leader>tt :NERDTreeToggle<CR>
+nnoremap <silent> <leader>tf :NERDTreeFocus<CR>
+nnoremap <silent> <Leader>tr :NERDTreeFocus<cr>R<c-w><c-p>
+"ALE
+nnoremap <silent> <leader>gg :ALEFix<CR>
+nnoremap <silent> <leader>gn :ALENext<CR>
+nnoremap <silent> <leader>gp :ALEPrevious<CR>
+
+"general mappingr
+nnoremap <silent> <leader>ee :e ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <leader>r :source $MYVIMRC<CR>
+"Clear Search
+nnoremap <silent> <esc> :noh<return><esc>
+
+"COC
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+
+nmap <C-m>e <Plug>(coc-definition)
+nmap <C-m>de <Plug>(coc-decleration)
+nmap <C-m>i <Plug>(coc-implementation)
+nmap <C-m>y <Plug>(coc-type-definition)
+nmap <C-m>re <Plug>(coc-references)
+nmap <C-m>rn <Plug>(coc-rename)
+nmap <C-m>rf <Plug>(coc-refactor)
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+
+"random options
+set autoindent
+set expandtab
+set number
+filetype indent on
+set shiftwidth=4
+set tabstop=4
+set smartindent
+set nobackup
+set nowritebackup
+set updatetime=300
+set visualbell
+set laststatus=2 "fixes powerline
+set hidden
+let g:emmet_html5=0
+let g:python3_host_prog="/usr/bin/python3"
+let g:python_host_prog="/usr/bin/python2"
