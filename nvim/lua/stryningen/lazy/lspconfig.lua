@@ -211,7 +211,23 @@ return {
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		local servers = {
 			-- clangd = {},
-			djls = {},
+			emmet_language_server = {
+				init_options = {
+					showSuggestionsAsSnippets = true,
+				},
+				filetypes = {
+					"css",
+					"eruby",
+					"html",
+					"javascript",
+					"javascriptreact",
+					"less",
+					"sass",
+					"scss",
+					"pug",
+					"typescriptreact",
+				},
+			},
 			-- gopls = {},
 			pyright = {},
 			-- rust_analyzer = {},
